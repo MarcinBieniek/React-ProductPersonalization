@@ -15,7 +15,7 @@ const ProductImage = (props) => {
 
 ProductImage.propTypes = {
     name: PropTypes.string.isRequired,
-    currentColor: PropTypes.string.isRequired,
+    color: PropTypes.string.isRequired,
   };
   
 

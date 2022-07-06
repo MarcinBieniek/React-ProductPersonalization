@@ -1,5 +1,5 @@
 import styles from './Product.module.scss';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import ProductImage from '../ProductImage/ProductImage';
 import ProductForm from '../ProductForm/ProductForm';
 import PropTypes from 'prop-types';
@@ -9,6 +9,7 @@ const Product = props => {
   const [currentColor, setCurrentColor] = useState(props.colors[0]);
   const [currentSize, setCurrentSize] = useState(props.sizes[0].name);
   const [currentPrice, setCurrentPrice] = useState(props.basePrice);
+  const [additionalPrice, setAdditionalPrice] = useState('');
 
   const handleSetSize = (size) => {
     setCurrentSize(size)
@@ -19,8 +20,12 @@ const Product = props => {
   }
 
   const getPrice = (price) => {
-    return setCurrentPrice(props.basePrice + price)
-  }
+    return setAdditionalPrice(price);
+  };
+
+  useMemo(() => {  
+    return setCurrentPrice(props.basePrice + additionalPrice);
+  }, [props.basePrice, additionalPrice]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -62,12 +67,12 @@ const Product = props => {
 };
 
 Product.propTypes = {
-  id: PropTypes.number.isRequired,
-  name: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
-  basePrice: PropTypes.number.isRequired,
-  color: PropTypes.array.isRequired,
-  sizes: PropTypes.array.isRequired
-}
+    id: PropTypes.number.isRequired,
+    name: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    basePrice: PropTypes.number.isRequired,
+    color: PropTypes.array.isRequired,
+    sizes: PropTypes.array.isRequired
+  }
 
 export default Product;
